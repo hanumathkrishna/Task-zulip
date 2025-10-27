@@ -28,13 +28,11 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
-              echo "Starting Zulip in demo (SQLite) mode..." &&
+              echo "🚀 Starting Zulip in demo (SQLite) mode..." &&
               mkdir -p /data &&
-              if [ ! -f /data/db.sqlite3 ]; then
-                echo "Creating new SQLite database..."
-                cp -r /home/zulip/deployments/current /data/app &&
-                cd /data/app &&
-                python3 /home/zulip/deployments/current/manage.py migrate --noinput
-              fi &&
-              echo "Launching Zulip..." &&
+              cd /home/zulip/deployments/current &&
+              echo "📦 Running DB migrations (SQLite mode)..." &&
+              python3 manage.py migrate --noinput &&
+              echo "🌐 Launching Zulip server..." &&
               /home/zulip/deployments/current/scripts/start-server
+
