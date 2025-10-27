@@ -1,19 +1,35 @@
-replicaCount: 1
+#replicaCount: 1
 
+
+#image:
+# repository: zulip/docker-zulip
+# tag: 9.2-0
+# pullPolicy: IfNotPresent
+
+
+#service:
+# type: NodePort
+# port: 9991
+# targetPort: 9991
+# nodePort: 31002
+
+#containerPort: 9991
+
+#resources: {}
+
+
+
+
+replicaCount: 1
 
 image:
   repository: zulip/docker-zulip
   tag: 9.2-0
   pullPolicy: IfNotPresent
 
-
 service:
   type: NodePort
   port: 9991
   targetPort: 9991
   nodePort: 31002
-
-containerPort: 9991
-
-resources: {}
 
