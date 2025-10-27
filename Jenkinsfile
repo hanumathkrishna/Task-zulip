@@ -45,13 +45,12 @@ pipeline {
       steps {
         script {
           echo "Deploying Zulip to Kubernetes via Helm..."
-          sh """
-            helm upgrade --install zulip-task ${HELM_CHART_PATH} \
-              --namespace ${K8S_NAMESPACE} --create-namespace \
-              --set image.repository=${DOCKER_IMAGE} \
-              --set image.tag=${IMAGE_TAG} \
-              --wait --timeout 10m
-          """
+            sh """
+              helm upgrade --install zulip-task ./helm/zulip \
+                --set image.repository=hanumath/zulip-task \
+                --set image.tag=${GIT_COMMIT:0:7} \
+                --namespace default --create-namespace
+            """
         }
       }
     }
