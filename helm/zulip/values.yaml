@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: zulip/docker-zulip
-  tag: 9.2-0
+  repository: hanumath/zulip-task   
+  tag: latest                       
   pullPolicy: IfNotPresent
 
 service:
@@ -12,6 +12,7 @@ service:
   nodePort: 31002
 
 env:
+  
   - name: DATABASE_BACKEND
     value: sqlite
   - name: DB_SETUP
@@ -22,8 +23,19 @@ env:
     value: "admin@example.com"
   - name: SETTING_ADMIN_DOMAIN
     value: "example.com"
+
+  
+  - name: ZULIP_ADMIN_EMAIL
+    value: "admin@example.com"
+  - name: ZULIP_ADMIN_PASSWORD
+    value: "admin123"
+
+  
   - name: WORKER_MULTIPROCESS
     value: "false"
+  - name: DEBUG
+    value: "True"
+
 
 volumeMounts:
   - name: zulip-data
@@ -33,3 +45,10 @@ volumes:
   - name: zulip-data
     emptyDir: {}
 
+resources:
+  limits:
+    cpu: "1000m"
+    memory: "1Gi"
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
