@@ -28,15 +28,20 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
-              echo "🚀 Starting Zulip (SQLite) mode as zulip user..." &&
+              echo "🚀 Starting Zulip in SQLite demo mode..." &&
               mkdir -p /data &&
               chown -R zulip:zulip /data &&
               su zulip -c '
+                echo "📦 Setting up Zulip configuration..." &&
                 cd /home/zulip/deployments/current &&
-                echo "📦 Running migrations..." &&
+                if [ ! -f /etc/zulip/zulip-secrets.conf ]; then
+                  echo "🔐 Initializing secrets (first run)..." &&
+                  ./scripts/setup/setup-zulip-secrets
+                fi &&
+                echo "🧱 Running database migrations (SQLite)..." &&
                 python3 manage.py migrate --noinput &&
                 echo "🌐 Launching Zulip server..." &&
-                /home/zulip/deployments/current/scripts/start-server
+                ./scripts/start-server
               '
 
 
