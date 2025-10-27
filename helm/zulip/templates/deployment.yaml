@@ -27,6 +27,13 @@ spec:
             {{- end }}
           volumeMounts:
             {{- toYaml .Values.volumeMounts | nindent 12 }}
+          command: ["bash", "-c"]
+          args:
+            - >
+              echo "Starting Zulip in SQLite demo mode..." &&
+              mkdir -p /data &&
+              export DATABASE_BACKEND=sqlite &&
+              ./tools/run-dev.py --interface 0.0.0.0 --port 9991
       volumes:
         {{- toYaml .Values.volumes | nindent 8 }}
 
