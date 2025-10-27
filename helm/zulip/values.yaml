@@ -1,9 +1,11 @@
 replicaCount: 1
 
+
 image:
-  repository: hanumath/zulip-task
-  tag: latest
-  pullPolicy: Always
+  repository: zulip/docker-zulip
+  tag: 9.2-0
+  pullPolicy: IfNotPresent
+
 
 service:
   type: NodePort
