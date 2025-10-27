@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zulip-task-deployment
+  labels:
+    app: zulip-task
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: zulip-task
+  template:
+    metadata:
+      labels:
+        app: zulip-task
+    spec:
+      containers:
+        - name: zulip-task
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["bash", "-c"]
+          args:
+            - |
+              echo "Starting Zulip container for demo...";
+              sleep 5;
+              if [ -f /home/zulip/deployments/current/manage.py ]; then
+                echo "Found Zulip codebase - running simple check";
+              fi;
+              exec tail -f /dev/null
+

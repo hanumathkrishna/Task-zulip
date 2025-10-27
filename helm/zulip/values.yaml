@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: hanumath/zulip-task
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: NodePort
+  port: 9991
+  targetPort: 9991
+  nodePort: 31002
+
+containerPort: 9991
+
+resources: {}
+
