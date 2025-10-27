@@ -1,6 +1,7 @@
 apiVersion: v2
 name: zulip
-description: A Helm chart for deploying Zulip demo on Kubernetes
+description: Helm chart for running Zulip in demo (SQLite) mode
 type: application
 version: 0.1.0
-appVersion: "1.0"
+appVersion: "9.2-0"
+

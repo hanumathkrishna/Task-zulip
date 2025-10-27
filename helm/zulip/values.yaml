@@ -14,10 +14,22 @@ service:
 env:
   - name: DATABASE_BACKEND
     value: sqlite
+  - name: DB_SETUP
+    value: "true"
   - name: SETTING_EXTERNAL_HOST
     value: "localhost"
   - name: SETTING_ZULIP_ADMINISTRATOR
     value: "admin@example.com"
   - name: SETTING_ADMIN_DOMAIN
     value: "example.com"
+  - name: WORKER_MULTIPROCESS
+    value: "false"
+
+volumeMounts:
+  - name: zulip-data
+    mountPath: /data
+
+volumes:
+  - name: zulip-data
+    emptyDir: {}
 
