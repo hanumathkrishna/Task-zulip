@@ -32,10 +32,10 @@ pipeline {
 
     stage('Push Docker Image') {
       steps {
-        script {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           sh """
-            echo "${DOCKER_CRED_PSW}" | docker login -u "${DOCKER_CRED_USR}" --password-stdin
-            docker push ${DOCKER_IMAGE}:${IMAGE_TAG}
+            echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+            docker push hanumath/zulip-task:${GIT_COMMIT:0:7}
           """
         }
       }
