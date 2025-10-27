@@ -15,11 +15,12 @@ COPY . /app
 RUN pip install --upgrade pip && \
     pip install -r requirements/dev.txt || pip install -r requirements/prod.txt || true
 
-# Optional: build frontend if needed
+# Install frontend dependencies if package.json exists
 RUN if [ -f package.json ]; then \
       apt-get update && apt-get install -y nodejs npm && \
-      npm install && npm run build; \
+      npm install; \
     fi
+
 
 # Expose port (Zulip usually runs on 9991)
 EXPOSE 9991
