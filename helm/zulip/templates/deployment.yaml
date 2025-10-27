@@ -25,15 +25,16 @@ spec:
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
-          command: ["bash", "-c"]
+          command: ["/bin/bash", "-c"]
           args:
-            - >
-              echo "Starting Zulip demo (SQLite) mode..." &&
+            - |
+              echo "Starting Zulip in demo (SQLite) mode..." &&
               mkdir -p /data &&
-              export DATABASE_BACKEND=sqlite &&
-              ./tools/run-dev.py --interface 0.0.0.0 --port 9991
-          volumeMounts:
-            {{- toYaml .Values.volumeMounts | nindent 12 }}
-      volumes:
-        {{- toYaml .Values.volumes | nindent 8 }}
-
+              if [ ! -f /data/db.sqlite3 ]; then
+                echo "Creating new SQLite database..."
+                cp -r /home/zulip/deployments/current /data/app &&
+                cd /data/app &&
+                python3 /home/zulip/deployments/current/manage.py migrate --noinput
+              fi &&
+              echo "Launching Zulip..." &&
+              /home/zulip/deployments/current/scripts/start-server
